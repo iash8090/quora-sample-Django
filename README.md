@@ -1,6 +1,9 @@
 # quora-sample
 This project is a imitation of Quora website
-
+- You can Sign-up and login to website
+- You can Post questions
+- You can answer any question
+- You can like the answers posted by others
 
 ### Commands to run after dwonloading project :
 
