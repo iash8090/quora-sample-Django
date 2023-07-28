@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ask Ques
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="container d-flex py-4" style="justify-content:center">
+    
+    <div class="row">
+        <h1> Please ask your question here </h1>
+        <form method="post" action="/askQues/">
+            {% csrf_token %}
+            {{qForm}}
+            <div class="py-2">
+                <button class="btn btn-primary " type="submit"> Submit</button> 
+            </div>
+        </form>
+</div>
+</div>
+
+<div class="container d-flex py-4" style="justify-content:center">
+    
+    <div class="row">
+        <h1> Please answer if you know any of the question </h1>
+        {% for q in ques %}
+        <div class ="row">
+            <h3> Q: <a href="{% url 'home:postAns' q.qid %}" >{{q.que}} </a> </h3>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

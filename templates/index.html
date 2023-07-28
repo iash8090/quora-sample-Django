@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Quora
+{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container d-flex py-4" style="justify-content:center">
+
+    <div class="row">
+        {% if name %}
+        <h1 class="pb-3" style="text-align:center"> Welcome to the <span style="color:red; font-weight:bold">Quora </span> Feed <u> {{name}} </u> </h1>
+        {% else %}
+        <h1 class="pb-3"  style="text-align:center"> Welcome to the <span style="color:red; font-weight:bold">Quora </span> Feed  </h1>
+        {% endif %}
+        {% for q in ques %}
+        {% if q.answr.all %}
+        <div class="card my-2">
+        <div class="card-header bg-transparent border-success">
+            <div class="row">
+                <div class="col-md-4"> Asked by: {{q.uname}} </div>
+                <div class="col-md-4 offset-md-4 "  style="text-align:right"> Date: {{q.date}} </div>
+            </div>
+            <div class="row">
+                <h3> Q: {{q.que}} </h3>
+            </div>
+        </div>    
+        
+            {% for a in q.answr.all %}
+            <div class="card-body text-success">
+            <div class ="row">
+                <h6><b> Answer {{forloop.counter}}: </b> {{a.ans}}</h6>
+            </div>
+        </div>
+            <div class="row mb-3 ">
+                <div class="col-md-4"> Answered by: {{a.uname}} </div>
+                
+                <div class="col-md-4" style="text-align:center">
+
+                    {% if request.user.is_anonymous %}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa fa-thumbs-up"> </i> <span class="icon"> Like {{ a.liked.all.count }} </span></button>
+
+                    <!-- Button trigger modal -->
+                    <!-- popup Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby= "exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Please Login</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Login before Liking any Answer.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" onclick="window.location.href='/users/login'" >Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <form action="{% url 'home:like-asnwer' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden",id="answer_id", name="answer_id", value="{{a.aid}}">
+                        {% if name not in a.liked.all %}
+                            <button type="submit" class="btn btn-secondary" id="like" value="{{a.aid}}">
+                                <i class="fa fa-thumbs-up"> </i>  </button>
+                                <span > {{ a.liked.all.count }} Likes  </span>
+                        {% else %}
+                            <button type="submit" class="btn btn-success" id="like" value="{{a.aid}}">
+                                <i class="fa fa-thumbs-up"> </i></button>
+                                <span > {{ a.liked.all.count }} Likes  </span>
+                        {% endif %}
+
+                        </form>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 offset"  style="text-align:right"> Date: {{a.date}} </div>
+            </div>
+            
+            {% endfor %}
+        </div>  
+
+            {% endif %}
+
+            {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}
+
+
