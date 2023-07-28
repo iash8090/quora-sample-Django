@@ -20,3 +20,7 @@ This project is a imitation of Quora website
 
 #### - Start Project
 > python manage.py runserver
+
+### Website Preview
+
+![plot](./website%20preview.png)
