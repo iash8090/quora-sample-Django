@@ -23,7 +23,7 @@ Quora
                 <div class="col-md-4 offset-md-4 "  style="text-align:right"> Date: {{q.date}} </div>
             </div>
             <div class="row">
-                <h3> Q: <a href="{% url 'home:postAns' q.qid %}"  style="text-decoration: none;">{{q.que}} </a>  </h3>
+                <h3> Q: <a href="{% url 'home:postAns' q.qid %}" style="text-decoration: none; ">{{q.que}} </a> </h3>
             </div>
         </div>    
         
@@ -39,12 +39,12 @@ Quora
                 <div class="col-md-4" style="text-align:center">
 
                     {% if request.user.is_anonymous %}
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                         <i class="fa fa-thumbs-up"> </i> <span class="icon"> Like {{ a.liked.all.count }} </span></button>
 
                     <!-- Button trigger modal -->
                     <!-- popup Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby= "exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby= "exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
