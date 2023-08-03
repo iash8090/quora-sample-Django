@@ -23,7 +23,7 @@ Quora
                 <div class="col-md-4 offset-md-4 "  style="text-align:right"> Date: {{q.date}} </div>
             </div>
             <div class="row">
-                <h3> Q: {{q.que}} </h3>
+                <h3> Q: <a href="{% url 'home:postAns' q.qid %}">{{q.que}} </a>  </h3>
             </div>
         </div>    
         
