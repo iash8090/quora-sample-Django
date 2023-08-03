@@ -22,12 +22,15 @@ def postAns(request, queId):
     data={"aForm":a, 'ques':query_set}
     try:
         if request.method == 'POST': 
-            ans = request.POST.get('answer')
-            uname = request.user.username
-            answer = Answer(ans=ans, queid=query_set, like=0, uname=uname, date=datetime.today())
-            answer.save()
-            messages.success(request, "Answer Posted Successfully!")
-            return redirect("/")
+            if request.user.is_authenticated:
+                ans = request.POST.get('answer')
+                uname = request.user.username
+                answer = Answer(ans=ans, queid=query_set, like=0, uname=uname, date=datetime.today())
+                answer.save()
+                messages.success(request, "Answer Posted Successfully!")
+                return redirect("/")
+            else:
+                messages.warning(request, "You are not Logged in")
 
         return render(request, 'postAns.html',data)
     except Exception as e:
