@@ -9,7 +9,7 @@ Quora
 <div class="container d-flex py-4" style="justify-content:center">
 
     <div class="row">
-        {% if name %}
+        {% if request.user.is_authenticated %}
         <h1 class="pb-3" style="text-align:center"> Welcome to the <span style="color:red; font-weight:bold">Quora </span> Feed <u> {{name}} </u> </h1>
         {% else %}
         <h1 class="pb-3"  style="text-align:center"> Welcome to the <span style="color:red; font-weight:bold">Quora </span> Feed  </h1>
