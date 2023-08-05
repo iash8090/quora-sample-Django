@@ -31,6 +31,7 @@ def postAns(request, queId):
                 return redirect("/")
             else:
                 messages.warning(request, "You are not Logged in")
+                
 
         return render(request, 'postAns.html',data)
     except Exception as e:
@@ -45,14 +46,17 @@ def askQues(request):
     data={"qForm":q, 'ques':query_set}
     try:
         if request.method == 'POST':
-            form = questions(request.POST)
-            if form.is_valid():
-                que = request.POST['question']
-                uname = request.user.username
-                question = Question(uname=uname, que=que, date=datetime.today())
-                question.save()
-                messages.success(request, "Question Submitted Successfully!")
-            return HttpResponseRedirect('/askQues', data)
+            if request.user.is_authenticated:
+                form = questions(request.POST)
+                if form.is_valid():
+                    que = request.POST['question']
+                    uname = request.user.username
+                    question = Question(uname=uname, que=que, date=datetime.today())
+                    question.save()
+                    messages.success(request, "Question Submitted Successfully!")
+                return HttpResponseRedirect('/askQues', data)
+            else:
+                messages.warning(request, "You are not Logged in")
 
         return render(request, 'askQues.html',data)
     except:
